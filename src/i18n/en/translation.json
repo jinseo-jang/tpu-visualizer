@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Home",
+    "generations": "TPU Generations",
+    "compare": "GPU vs TPU"
+  },
+  "hero": {
+    "title": "Understanding Everything About TPUs",
+    "subtitle": "Learn TPU architecture through interactive 3D visualization"
+  },
+  "sections": {
+    "whatIsTpu": {
+      "title": "What is a TPU?",
+      "description": "A TPU (Tensor Processing Unit) is a custom ASIC (Application-Specific Integrated Circuit) designed by Google for machine learning workloads. Unlike general-purpose CPUs or GPUs, it uses specialized systolic arrays for matrix operations to accelerate deep learning training and inference."
+    },
+    "coreArchitecture": {
+      "title": "Core Architecture",
+      "mxu": "MXU (Matrix Multiply Unit)",
+      "mxuDesc": "A systolic array-based unit dedicated to matrix operations, serving as the TPU's core computation engine.",
+      "hbm": "HBM (High Bandwidth Memory)",
+      "hbmDesc": "Ultra-high bandwidth memory that stores large model parameters and activation values.",
+      "ici": "ICI (Inter-Chip Interconnect)",
+      "iciDesc": "Ultra-fast inter-chip communication interconnect enabling Pod-scale expansion."
+    },
+    "timeline": {
+      "title": "TPU Evolution Across Generations",
+      "viewDetails": "View Details"
+    },
+    "gpuVsTpu": {
+      "title": "GPU vs TPU",
+      "subtitle": "Key architectural differences",
+      "viewComparison": "View Full Comparison"
+    }
+  },
+  "generations": {
+    "v1": {
+      "name": "TPU v1",
+      "description": "Google's first TPU, designed exclusively for inference. It introduced 8-bit integer arithmetic and systolic arrays, dramatically improving deep learning inference performance.",
+      "innovations": "First systolic array, 8-bit integer ops, inference-only ASIC"
+    },
+    "v2": {
+      "name": "TPU v2",
+      "description": "The first TPU to support training. It introduced bfloat16 floating-point format and HBM, with the first Pod configuration connecting 64 chips.",
+      "innovations": "Training support, bfloat16, HBM introduction, 64-chip Pod"
+    },
+    "v3": {
+      "name": "TPU v3",
+      "description": "Doubled HBM capacity and introduced liquid cooling. Supports 1,024-chip Pods enabling large-scale model training.",
+      "innovations": "2x HBM, liquid cooling, 1024-chip Pod"
+    },
+    "v4": {
+      "name": "TPU v4",
+      "description": "Introduced 4,096-chip Pods, 3D torus ICI topology, and Optical Circuit Switching (OCS), greatly improving large-scale distributed training efficiency.",
+      "innovations": "4096-chip Pod, 3D torus ICI, Optical Circuit Switching"
+    },
+    "v5e": {
+      "name": "TPU v5e",
+      "description": "A cost-efficient TPU supporting both training and inference. Introduced Megacore architecture optimizing price-performance ratio.",
+      "innovations": "Cost optimization, Megacore, unified training+inference"
+    },
+    "v5p": {
+      "name": "TPU v5p",
+      "description": "Designed for maximum-scale training with 8,960-chip Pods and SparseCores. Optimized for large language model training.",
+      "innovations": "8960-chip Pod, SparseCore, large-scale LLM training"
+    },
+    "trillium": {
+      "name": "Trillium (v6e)",
+      "description": "Focused on energy efficiency and per-chip performance improvement. Significant per-chip performance gains over the previous generation.",
+      "innovations": "Energy efficiency, major per-chip performance improvement"
+    },
+    "ironwood": {
+      "name": "Ironwood",
+      "description": "The latest TPU announced in 2025, featuring maximum scale and performance. Integrates and advances all innovations from previous generations.",
+      "innovations": "Peak performance, 192GB HBM, 9216-chip Pod, next-gen ICI"
+    }
+  },
+  "generation": {
+    "specs": "Specifications",
+    "innovations": "Key Innovations",
+    "peakTflops": "Peak TFLOPS",
+    "hbm": "HBM",
+    "hbmBandwidth": "HBM Bandwidth",
+    "iciBandwidth": "ICI Bandwidth",
+    "podSize": "Pod Size"
+  },
+  "simulation": {
+    "play": "Play",
+    "pause": "Pause",
+    "speed": "Speed"
+  },
+  "compare": {
+    "performanceTitle": "Performance Comparison",
+    "disclaimer": "* Approximate values for educational purposes. GPU: NVIDIA H100, TPU: v5p.",
+    "gpuLabel": "GPU",
+    "tpuLabel": "TPU",
+    "metrics": {
+      "matmul": "Matrix Multiply Throughput",
+      "hbmBw": "HBM Bandwidth",
+      "interconnect": "Interconnect Bandwidth",
+      "podScale": "Pod Scale"
+    },
+    "architecture": {
+      "title": "Architecture Comparison",
+      "gpuApproach": "GPU: CUDA core-based parallel processing",
+      "tpuApproach": "TPU: Systolic array-based matrix operations",
+      "gpuMemory": "GPU: GDDR/HBM + L1/L2 cache",
+      "tpuMemory": "TPU: HBM + large on-chip memory",
+      "gpuScale": "GPU: NVLink/NVSwitch",
+      "tpuScale": "TPU: ICI (Inter-Chip Interconnect)"
+    }
+  },
+  "footer": {
+    "references": "References",
+    "credits": "This site was created for educational purposes."
+  },
+  "common": {
+    "language": "Language",
+    "loading": "Loading...",
+    "notFound": "Page not found.",
+    "backHome": "Back to Home"
+  }
+}

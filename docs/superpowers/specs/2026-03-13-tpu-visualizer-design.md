@@ -7,6 +7,12 @@ An interactive educational website that visualizes TPU (Tensor Processing Unit) 
 **Target audience:** ML/AI beginners through intermediate developers — covers fundamentals to deep architecture details.
 
 **Languages:** Korean + English (i18next)
+- Default language: Korean. Detected via browser `navigator.language`, stored in `localStorage`.
+- Language switcher in header toggles between ko/en. URL does not change (SPA, no URL prefix).
+- Translation scope: all UI chrome + all educational body text + 3D component labels/tooltips.
+- Translations are maintained as JSON files in `src/i18n/ko/` and `src/i18n/en/`.
+
+**Deployment:** Vercel (static SPA hosting, free tier suitable for educational sites)
 
 ## Site Structure
 
@@ -28,7 +34,7 @@ An interactive educational website that visualizes TPU (Tensor Processing Unit) 
 
 **Detail Pages:**
 
-- `/generation/:id` — Per-generation detail (v1, v2, v3, v4, v5e, v5p, trillium, ironwood)
+- `/generation/:id` — Per-generation detail. Slug values: `v1`, `v2`, `v3`, `v4`, `v5e`, `v5p`, `trillium`, `ironwood`
   - Full 3D interactive model with OrbitControls
   - Data flow simulation with play/pause/speed controls
   - Specs, innovations, improvements over previous generation
@@ -47,9 +53,15 @@ An interactive educational website that visualizes TPU (Tensor Processing Unit) 
 
 ### Main Page 3D
 
-- Scroll-position-driven animation: TPU model morphs as user scrolls through generations
-- Key components highlight on each generation transition
+- Scroll-position-driven animation using Framer Motion `useScroll` + `useTransform` for scroll progress tracking
+- Generation transitions: camera position shifts + opacity crossfade between generation models (not geometry interpolation — each generation is a separate component that fades in/out)
+- Key components highlight via emissive material changes as each generation enters viewport
 - Lightweight rendering — simplified geometry
+
+### Animation Boundary
+
+- **Framer Motion**: All 2D UI animations (section transitions, card reveals, text fade-ins, page transitions)
+- **R3F/Drei**: All 3D animations (model rotation, data flow particles, component highlights, camera movement)
 
 ### Detail Page 3D (Simulation)
 
@@ -93,7 +105,7 @@ An interactive educational website that visualizes TPU (Tensor Processing Unit) 
 - **Architecture:** CUDA Core vs Systolic Array computation model
 - **Memory:** GPU HBM/GDDR vs TPU HBM structure
 - **Scaling:** NVLink/NVSwitch vs ICI interconnect
-- **Performance/Cost charts:** Based on major ML workloads
+- **Performance/Cost charts:** Illustrative data based on publicly available Google research papers and official TPU documentation. Charts are labeled as approximate/educational, not benchmarks.
 
 ## Tech Stack
 
@@ -145,7 +157,7 @@ src/
 ## Accessibility
 
 - Text alternatives (aria-label) for all 3D visualizations
-- Static image + text fallback when 3D is unsupported
+- WebGL support detected via `WebGLRenderingContext` check on mount; if unsupported, render static PNG diagrams with descriptive alt text
 - Keyboard navigation (Tab between components, Enter to interact)
 - WCAG AA color contrast compliance
 
@@ -153,4 +165,9 @@ src/
 
 - Main page initial load: under 3 seconds (3D assets lazy loaded)
 - Detail page transition: under 1 second
-- Lighthouse performance score: 80+
+- Lighthouse performance score: 80+ (desktop, default throttling)
+
+## Browser Support
+
+- Chrome 90+, Firefox 90+, Safari 15+, Edge 90+
+- WebGL 2.0 required for 3D features; graceful fallback for unsupported browsers

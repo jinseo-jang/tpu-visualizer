@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# Agent / AI tool directories
+.agents
+.claude
+.superpowers
+skills-lock.json
+
+# Test scripts
+test-tour.mjs
+
+# Screenshots
+screenshots
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

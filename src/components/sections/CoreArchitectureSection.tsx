@@ -34,7 +34,7 @@ export default function CoreArchitectureSection() {
               <Card className="h-full">
                 <div className={`h-1 w-16 rounded bg-gradient-to-r ${item.color} mb-4`} />
                 <h3 className="text-lg font-semibold mb-3">{t(item.titleKey)}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{t(item.descKey)}</p>
+                <p className="text-[#5f6368] text-sm leading-relaxed">{t(item.descKey)}</p>
               </Card>
             </motion.div>
           ))}

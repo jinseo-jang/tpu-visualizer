@@ -10,7 +10,7 @@ const Compare = lazy(() => import('./pages/Compare'))
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-950 text-white">
+      <div className="min-h-screen bg-[#f8f9fa] text-[#202124]" style={{ fontFamily: "'Roboto', sans-serif" }}>
         <Header />
         <Suspense fallback={<div className="pt-20 text-center text-gray-500">Loading...</div>}>
           <Routes>

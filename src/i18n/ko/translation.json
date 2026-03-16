@@ -6,7 +6,8 @@
   },
   "hero": {
     "title": "TPU의 모든 것을 이해하다",
-    "subtitle": "인터랙티브 3D 시각화로 배우는 TPU 아키텍처"
+    "subtitle": "인터랙티브 시각화로 배우는 TPU 아키텍처와 데이터 파이프라인",
+    "cta": "TPU 세대 탐색하기"
   },
   "sections": {
     "whatIsTpu": {
@@ -112,6 +113,37 @@
   "footer": {
     "references": "참고 자료",
     "credits": "이 사이트는 교육 목적으로 제작되었습니다."
+  },
+  "tour": {
+    "startTour": "가이드 투어 시작",
+    "next": "다음",
+    "prev": "이전",
+    "close": "닫기",
+    "finish": "완료",
+    "overview": {
+      "title": "TPU 전체 구조",
+      "description": "TPU 칩의 전체 구조를 보여줍니다. 왼쪽 Host(CPU)는 학습 데이터와 명령을 보내는 제어 컴퓨터입니다. 칩 내부에는 데이터를 저장하는 메모리(HBM, VMEM), 행렬 연산을 하는 MXU, 결과를 정리하는 ACC와 VPU가 있습니다. 여러 칩을 연결하는 ICI는 대규모 AI 모델 학습에 필수적입니다."
+    },
+    "mxu": {
+      "title": "MXU — 행렬 연산 엔진",
+      "description": "MXU(Matrix Multiply Unit)는 AI의 핵심 연산인 행렬 곱셈을 담당합니다. 내부는 격자(그리드) 형태의 '시스톨릭 어레이'로 되어 있는데, 마치 컨베이어 벨트처럼 데이터가 한 방향으로 흐르면서 각 칸이 동시에 곱셈과 덧셈을 수행합니다. 다이어그램의 대각선 파형이 이 과정입니다. GPU가 수천 개의 범용 코어로 병렬 처리하는 것과 달리, TPU의 MXU는 행렬 연산에만 특화되어 더 높은 에너지 효율을 달성합니다."
+    },
+    "hbm_vmem": {
+      "title": "HBM & VMEM — 2단계 메모리",
+      "description": "HBM(High Bandwidth Memory)은 칩 '외부'에 있는 대용량 메모리로, AI 모델의 가중치(파라미터)와 학습 데이터를 저장합니다. 하지만 HBM은 용량이 크되 MXU에서 직접 읽기엔 느립니다. 그래서 VMEM이라는 칩 '내부'의 소형 고속 메모리가 중간 다리 역할을 합니다. HBM에서 필요한 데이터 덩어리를 VMEM으로 미리 가져오고, VMEM이 MXU에 빠르게 공급합니다. 다이어그램에서 HBM → VMEM → MXU 흐름을 확인하세요."
+    },
+    "vpu_acc": {
+      "title": "ACC & VPU — 결과 후처리",
+      "description": "MXU가 행렬 곱셈을 마치면 중간 결과(부분합)가 나옵니다. Accumulators(ACC)는 이 부분합들을 하나로 모아주는 저장소입니다. 다음으로 VPU(Vector Processing Unit)가 활성화 함수(ReLU, Softmax 등) 같은 비선형 연산을 적용합니다. 이 과정이 AI가 '학습'하는 데 핵심적인 역할을 합니다. 처리가 완료된 데이터는 VMEM을 거쳐 HBM에 다시 저장됩니다. 다이어그램에서 MXU → ACC → VPU → VMEM → HBM 순서를 따라가 보세요."
+    },
+    "ici": {
+      "title": "ICI — 칩 간 고속 연결",
+      "description": "ICI(Inter-Chip Interconnect)는 TPU 칩들을 서로 연결하는 전용 고속 통신선입니다. GPT나 Gemini 같은 대규모 AI 모델은 한 칩의 메모리에 다 들어가지 않기 때문에, 여러 칩에 나누어 학습합니다. 이때 각 칩이 계산한 그래디언트(학습 신호)를 ICI를 통해 서로 교환합니다. 데이터가 HBM에서 ICI를 거쳐 이웃 칩으로 전달되는 양방향 흐름을 확인하세요."
+    },
+    "pipeline": {
+      "title": "전체 데이터 흐름",
+      "description": "AI 학습 한 스텝의 전체 여정입니다: ① Host(CPU)가 학습 데이터를 HBM에 전송 → ② HBM에서 필요한 부분을 VMEM으로 로드 → ③ VMEM이 MXU에 데이터 공급, 행렬 곱셈 수행 → ④ MXU 결과가 Accumulators에 누적 → ⑤ VPU가 활성화 함수 등 후처리 → ⑥ 결과가 VMEM → HBM으로 되돌아감 → ⑦ 필요 시 ICI를 통해 다른 칩과 결과 교환. 이 과정이 수만~수백만 번 반복되면서 AI가 학습합니다."
+    }
   },
   "common": {
     "language": "언어",

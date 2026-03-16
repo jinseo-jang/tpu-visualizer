@@ -4,8 +4,8 @@ export default function Footer() {
   const { t } = useTranslation()
 
   return (
-    <footer className="border-t border-gray-800 py-12 px-4">
-      <div className="max-w-7xl mx-auto text-center text-gray-400 text-sm">
+    <footer className="border-t border-[#dadce0] py-12 px-4">
+      <div className="max-w-7xl mx-auto text-center text-[#5f6368] text-sm">
         <p>{t('footer.credits')}</p>
       </div>
     </footer>

@@ -7,7 +7,7 @@ export default function GenerationTimeline() {
   const { t } = useTranslation()
 
   return (
-    <section className="py-24 px-4">
+    <section className="py-24 px-4 bg-white overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.h2
           className="text-3xl md:text-4xl font-bold mb-16 text-center"
@@ -18,7 +18,7 @@ export default function GenerationTimeline() {
           {t('sections.timeline.title')}
         </motion.h2>
         <div className="relative">
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-800 hidden md:block" />
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#dadce0] hidden md:block" />
           <div className="space-y-12">
             {generations.map((gen, i) => (
               <motion.div
@@ -35,7 +35,7 @@ export default function GenerationTimeline() {
                   )}
                 </div>
                 <div
-                  className="w-12 h-12 rounded-full border-4 flex items-center justify-center text-xs font-bold shrink-0 z-10 bg-gray-950"
+                  className="w-12 h-12 rounded-full border-4 flex items-center justify-center text-xs font-bold shrink-0 z-10 bg-white"
                   style={{ borderColor: gen.color }}
                 >
                   {gen.year}
@@ -56,11 +56,11 @@ export default function GenerationTimeline() {
 
 function TimelineCard({ gen, t }: { gen: typeof generations[0]; t: (key: string) => string }) {
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+    <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm">
       <h3 className="text-xl font-bold mb-2" style={{ color: gen.color }}>
         {t(gen.nameKey)}
       </h3>
-      <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+      <p className="text-[#5f6368] text-sm mb-4 line-clamp-3">
         {t(gen.descriptionKey)}
       </p>
       <Link

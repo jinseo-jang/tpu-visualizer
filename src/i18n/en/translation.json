@@ -6,7 +6,8 @@
   },
   "hero": {
     "title": "Understanding Everything About TPUs",
-    "subtitle": "Learn TPU architecture through interactive 3D visualization"
+    "subtitle": "Interactive visualization of TPU architecture and data pipeline",
+    "cta": "Explore TPU Generations"
   },
   "sections": {
     "whatIsTpu": {
@@ -112,6 +113,37 @@
   "footer": {
     "references": "References",
     "credits": "This site was created for educational purposes."
+  },
+  "tour": {
+    "startTour": "Start Guided Tour",
+    "next": "Next",
+    "prev": "Previous",
+    "close": "Close",
+    "finish": "Finish",
+    "overview": {
+      "title": "TPU Architecture Overview",
+      "description": "This diagram shows the full structure of a TPU chip. The Host (CPU) on the left is the control computer that sends training data and instructions. Inside the chip: HBM and VMEM store data, the MXU performs matrix operations, and ACC/VPU refine the results. ICI connects multiple chips for large-scale AI training."
+    },
+    "mxu": {
+      "title": "MXU — Matrix Computation Engine",
+      "description": "The MXU (Matrix Multiply Unit) handles matrix multiplication — the core operation in AI. Inside is a grid called a 'systolic array' where data flows like a conveyor belt, with each cell simultaneously performing multiply-and-add. The diagonal wave in the diagram shows this process. Unlike GPUs that use thousands of general-purpose cores, the MXU is specialized purely for matrix math, achieving higher energy efficiency."
+    },
+    "hbm_vmem": {
+      "title": "HBM & VMEM — Two-Level Memory",
+      "description": "HBM (High Bandwidth Memory) sits 'outside' the chip and stores AI model weights and training data in bulk. However, HBM is too slow for the MXU to read directly. That's where VMEM comes in — a small, fast memory 'inside' the chip that acts as a bridge. Data is pre-fetched from HBM into VMEM in chunks, then VMEM feeds it to the MXU at high speed. Follow the HBM → VMEM → MXU flow in the diagram."
+    },
+    "vpu_acc": {
+      "title": "ACC & VPU — Result Post-Processing",
+      "description": "After the MXU finishes matrix multiplication, it produces intermediate results (partial sums). The Accumulators (ACC) collect and combine these partial sums. Next, the VPU (Vector Processing Unit) applies non-linear operations like activation functions (ReLU, Softmax) — essential steps for AI learning. The processed data then flows back through VMEM to HBM. Follow the MXU → ACC → VPU → VMEM → HBM sequence in the diagram."
+    },
+    "ici": {
+      "title": "ICI — High-Speed Chip Link",
+      "description": "ICI (Inter-Chip Interconnect) is a dedicated high-speed link connecting TPU chips together. Large AI models like GPT or Gemini don't fit in a single chip's memory, so they're split across many chips for training. Each chip exchanges its computed gradients (learning signals) with others via ICI. Notice how data flows from HBM through ICI to the neighbor chip in both directions."
+    },
+    "pipeline": {
+      "title": "Full Data Flow",
+      "description": "The complete journey of one AI training step: ① Host (CPU) sends training data to HBM → ② Relevant portions are loaded from HBM into VMEM → ③ VMEM feeds data to MXU for matrix multiplication → ④ MXU results accumulate in the Accumulators → ⑤ VPU applies activation functions and post-processing → ⑥ Results flow back through VMEM to HBM → ⑦ If needed, results are shared with other chips via ICI. This cycle repeats millions of times as the AI learns."
+    }
   },
   "common": {
     "language": "Language",

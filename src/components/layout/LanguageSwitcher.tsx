@@ -12,7 +12,7 @@ export default function LanguageSwitcher() {
   return (
     <button
       onClick={toggle}
-      className="px-3 py-1 text-sm border border-gray-600 rounded hover:bg-gray-800 transition-colors"
+      className="px-3 py-1 text-sm border border-[#dadce0] rounded hover:bg-[#e8eaed] text-[#5f6368] transition-colors"
     >
       {i18n.language === 'ko' ? 'EN' : '한국어'}
     </button>

@@ -22,7 +22,25 @@
       "step2Title": "Wavefront Flow",
       "step2": "Input data is fetched from memory just once, then flows endlessly through the grid from left to right, top to bottom, like a cascading wavefront.",
       "step3Title": "Meaning of Numbers: Multiply-Accumulate (MAC)",
-      "step3": "The changing numbers inside the grid are Partial Sums! Each block multiplies the passing input by its stationary weight, instantly accumulates (adds) the result to the number passed from the previous block, and updates its own number. This relentless cycle of calculation and passing completes the massive matrix multiplication."
+      "step3": "The changing numbers inside the grid are Partial Sums! Each block multiplies the passing input by its stationary weight, instantly accumulates (adds) the result to the number passed from the previous block, and updates its own number. This relentless cycle of calculation and passing completes the massive matrix multiplication.",
+      "deepDiveTitle": "Deep Dive: Why TPUs Dominate Massive Matrix Ops",
+      "deepDiveIntro": "The TPU is engineered to maximize Computational Intensity. While traditional architectures eventually crash into a 'Memory-bound' wall, the Systolic Array shatters those limits through 3 distinct efficiencies:",
+      "deepDiveBtnShow": "Expand Deep Dive",
+      "deepDiveBtnHide": "Collapse Deep Dive",
+      "deepDivePoints": [
+        {
+          "title": "Unmatched Throughput",
+          "desc": "GPUs often leave compute units idling while waiting for data to traverse the memory bus. Conversely, a Systolic Array pulls data once and washes it across tens of thousands of processing elements in a continuous wave, avoiding bottleneck delays entirely."
+        },
+        {
+          "title": "Performance per Watt",
+        "desc": "In modern chips, simply moving data around consumes significantly more energy than the computation itself. By passing intermediate results directly to neighboring ALUs instead of routing them to memory, TPUs convert massive electrical savings directly into raw compute power."
+        },
+        {
+          "title": "Area Efficiency",
+          "desc": "Freed from the burden of general-purpose graphics or complex control logic workloads, TPUs dedicate almost their entire silicon area exclusively to pure mathematical 'muscle' (ALUs)."
+        }
+      ]
     },
     "coreFeatures": {
       "title": "5 Pillars of TPU Architecture",

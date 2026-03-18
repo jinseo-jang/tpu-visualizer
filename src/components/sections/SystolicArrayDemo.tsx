@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
 export default function SystolicArrayDemo() {
   const { t } = useTranslation()
   const [isPlaying, setIsPlaying] = useState(false)
   const [step, setStep] = useState(0)
+  const [isDeepDiveOpen, setIsDeepDiveOpen] = useState(false)
 
   // 3x3 Grid of Processing Elements (PE)
   // Matrix A (3x3) flowing from left, Matrix B (3x3) flowing from top.
@@ -141,6 +142,62 @@ export default function SystolicArrayDemo() {
             </div>
           </div>
         </div>
+
+        {/* Deep Dive Section */}
+        <div className="mt-16 bg-blue-50/50 rounded-2xl border border-blue-100/50 overflow-hidden shadow-sm">
+          <button
+            onClick={() => setIsDeepDiveOpen(!isDeepDiveOpen)}
+            className="w-full px-8 py-6 flex items-start sm:items-center justify-between text-left hover:bg-blue-50/80 transition-colors"
+          >
+            <div className="pr-6">
+              <h3 className="text-xl font-bold text-blue-900 leading-snug">
+                {t('sections.systolic.deepDiveTitle')}
+              </h3>
+              <p className="text-blue-700/80 mt-2 text-sm max-w-3xl leading-relaxed font-medium">
+                {t('sections.systolic.deepDiveIntro')}
+              </p>
+            </div>
+            <div className={`mt-2 sm:mt-0 shrink-0 p-2.5 rounded-full bg-blue-100/70 text-blue-600 transition-transform duration-300 ${isDeepDiveOpen ? 'rotate-180' : ''}`}>
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </button>
+          
+          <AnimatePresence>
+            {isDeepDiveOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="px-8 pb-8 pt-2">
+                  <div className="h-px w-full bg-blue-100/60 mb-6"></div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[0, 1, 2].map((i) => (
+                      <div key={i} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold shrink-0 text-sm">
+                            {i + 1}
+                          </div>
+                          <h4 className="font-bold text-gray-900 leading-tight">
+                            {t(`sections.systolic.deepDivePoints.${i}.title`)}
+                          </h4>
+                        </div>
+                        <p className="text-sm text-gray-600 leading-relaxed pl-11">
+                          {t(`sections.systolic.deepDivePoints.${i}.desc`)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
       </div>
     </section>
   )

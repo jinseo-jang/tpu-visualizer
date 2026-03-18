@@ -23,22 +23,22 @@
       "step2": "Input data is fetched from memory just once, then flows endlessly through the grid from left to right, top to bottom, like a cascading wavefront.",
       "step3Title": "Meaning of Numbers: Multiply-Accumulate (MAC)",
       "step3": "The changing numbers inside the grid are Partial Sums! Each block multiplies the passing input by its stationary weight, instantly accumulates (adds) the result to the number passed from the previous block, and updates its own number. This relentless cycle of calculation and passing completes the massive matrix multiplication.",
-      "deepDiveTitle": "Deep Dive: Why TPUs Dominate Massive Matrix Ops",
-      "deepDiveIntro": "The TPU is engineered to maximize Computational Intensity. While traditional architectures eventually crash into a 'Memory-bound' wall, the Systolic Array shatters those limits through 3 distinct efficiencies:",
+      "deepDiveTitle": "Deep Dive: Computational Intensity & Architectural Efficiency",
+      "deepDiveIntro": "The TPU is specifically designed to optimize large-scale matrix operations. The core principle driving this design is 'Computational Intensity'—the ratio of computing operations performed per byte of data accessed from memory. By maximizing this intensity, the Systolic Array effectively overcomes traditional 'Memory-bound' limitations in three key areas:",
       "deepDiveBtnShow": "Expand Deep Dive",
       "deepDiveBtnHide": "Collapse Deep Dive",
       "deepDivePoints": [
         {
-          "title": "Unmatched Throughput",
-          "desc": "GPUs often leave compute units idling while waiting for data to traverse the memory bus. Conversely, a Systolic Array pulls data once and washes it across tens of thousands of processing elements in a continuous wave, avoiding bottleneck delays entirely."
+          "title": "Maximized Throughput",
+          "desc": "Traditional architectures often experience bottlenecks where compute units remain idle while waiting for data transfers over the memory bus. In contrast, the Systolic Array fetches data once and passes it continuously across tens of thousands of processing elements, significantly increasing throughput."
         },
         {
           "title": "Performance per Watt",
-        "desc": "In modern chips, simply moving data around consumes significantly more energy than the computation itself. By passing intermediate results directly to neighboring ALUs instead of routing them to memory, TPUs convert massive electrical savings directly into raw compute power."
+          "desc": "In modern processors, moving data between memory and compute units consumes substantially more energy than the computation itself. The TPU avoids writing intermediate outputs back to memory, instead passing them directly to neighboring ALUs, which translates electrical savings into higher raw performance."
         },
         {
           "title": "Area Efficiency",
-          "desc": "Freed from the burden of general-purpose graphics or complex control logic workloads, TPUs dedicate almost their entire silicon area exclusively to pure mathematical 'muscle' (ALUs)."
+          "desc": "Unlike general-purpose processors that require complex control logic and large multi-level caches, the TPU allocates the vast majority of its silicon area directly to Matrix Multiply Units (ALUs), resulting in an incredibly dense and efficient computational core."
         }
       ]
     },

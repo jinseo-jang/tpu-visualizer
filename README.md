@@ -41,5 +41,24 @@ An interactive and educational web application designed to visually explain and 
    ```
    The app will automatically launch at `http://localhost:5173`.
 
+## ☁️ Deployment (Google Cloud Run)
+
+This project is configured for seamless production deployment to Google Cloud Run using Docker and Nginx (which elegantly handles React Router SPA fallback routing).
+
+1. **Authenticate with Google Cloud:**
+   ```bash
+   gcloud auth login
+   gcloud config set project <YOUR_PROJECT_ID>
+   ```
+
+2. **Deploy from Source:**
+   ```bash
+   gcloud run deploy tpu-visualizer \
+     --source . \
+     --region us-central1 \
+     --allow-unauthenticated
+   ```
+   *Note: The included `.dockerignore` file prevents local `esbuild` binaries from conflicting with the Linux Cloud Build environment, bypassing Vite 8's Node version requirements.*
+
 ## 📖 Learn More
 Built to provide an intuitive understanding of the complex hardware ecosystems enabling large language models and modern deep learning at scale.

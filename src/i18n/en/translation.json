@@ -14,13 +14,47 @@
       "title": "What is a TPU?",
       "description": "A TPU (Tensor Processing Unit) is a custom ASIC (Application-Specific Integrated Circuit) designed by Google for machine learning workloads. Unlike general-purpose CPUs or GPUs, it uses specialized systolic arrays for matrix operations to accelerate deep learning training and inference."
     },
+    "systolic": {
+      "title": "Systolic Array: Data Conveyor Belt",
+      "desc": "Unlike CPUs that fetch data from memory for every single multiplication, a TPU's systolic array keeps data flowing organically like a heartbeat, maximizing computational efficiency.",
+      "step1Title": "Weight Stationary",
+      "step1": "The trained AI model's weight parameters are pre-loaded and locked into each computation grid cell (Processing Element).",
+      "step2Title": "Wavefront Flow",
+      "step2": "Input data is fetched from memory just once, then flows endlessly through the grid from left to right, top to bottom, like a cascading wavefront.",
+      "step3Title": "Meaning of Numbers: Multiply-Accumulate (MAC)",
+      "step3": "The changing numbers inside the grid are Partial Sums! Each block multiplies the passing input by its stationary weight, instantly accumulates (adds) the result to the number passed from the previous block, and updates its own number. This relentless cycle of calculation and passing completes the massive matrix multiplication."
+    },
+    "coreFeatures": {
+      "title": "5 Pillars of TPU Architecture",
+      "subtitle": "Discover Google's 5 disruptive hardware innovations designed to shatter the bottlenecks of giant AI models.",
+      "systolic": {
+        "title": "Systolic Array\nMatrix Engine",
+        "desc": "An aggressively optimized main compute engine that flows data continuously in one direction like a heartbeat to maximize matrix multiplication efficiency."
+      },
+      "pod": {
+        "title": "Pod Supercomputer",
+        "desc": "A massive clustering technology that transcends single chips by directly connecting thousands of TPUs to operate seamlessly as one giant machine."
+      },
+      "ici": {
+        "title": "ICI\nInter-Chip Interconnect",
+        "desc": "An ultra-low latency, dedicated optical network that directly bridges chips together, entirely bypassing slow conventional server networking hardware."
+      },
+      "sparsecore": {
+        "title": "SparseCore\nEmbedding Unit",
+        "desc": "A specialized offload processor dedicated to handling highly irregular memory lookups for recommendation models and LLMs, completely eliminating memory bandwidth bottlenecks."
+      },
+      "hbm": {
+        "title": "HBM\nHigh Bandwidth Memory",
+        "desc": "Vertically stacked high-performance unified memory placed adjacently to the core, supplying colossal parameter data to calculators at the speed of light."
+      }
+    },
     "coreArchitecture": {
       "title": "Core Architecture",
-      "mxu": "MXU (Matrix Multiply Unit)",
+      "mxu": "MXU\nMatrix Multiply Unit",
       "mxuDesc": "A systolic array-based unit dedicated to matrix operations, serving as the TPU's core computation engine.",
-      "hbm": "HBM (High Bandwidth Memory)",
+      "hbm": "HBM\nHigh Bandwidth Memory",
       "hbmDesc": "Ultra-high bandwidth memory that stores large model parameters and activation values.",
-      "ici": "ICI (Inter-Chip Interconnect)",
+      "ici": "ICI\nInter-Chip Interconnect",
       "iciDesc": "Ultra-fast inter-chip communication interconnect enabling Pod-scale expansion."
     },
     "timeline": {
@@ -82,7 +116,28 @@
     "hbm": "HBM",
     "hbmBandwidth": "HBM Bandwidth",
     "iciBandwidth": "ICI Bandwidth",
-    "podSize": "Pod Size"
+    "podSize": "Pod Size",
+    "tensorCores": "Tensor Cores / Chip",
+    "sparseCores": "SparseCores / Chip",
+    "mxuPerCore": "MXUs / Core",
+    "vmem": "On-chip VMEM (Total)",
+    "podStructure": "Pod Structure (Physical Scale)",
+    "podStructureDesc": "A TPU Pod is a massive single supercomputer cluster built by directly connecting a vast number of TPU chips via an ultra-high-speed custom network (ICI). This core architecture allows thousands of chips to operate seamlessly as one giant processor, drastically reducing distributed training time for large AI models.",
+    "totalChipsTitle": "Total Chips per Pod",
+    "massiveSupercomputer": "Massive-Scale Supercomputer",
+    "optimizedServerMesh": "Optimized Server Mesh",
+    "topology3D": "3D TORUS TOPOLOGY",
+    "topology2D": "2D TORUS MESH",
+    "desc3D": "TPU v4 and v5p adopt a 3D Torus topology, connecting chips to 6 direct neighbors in a 3-dimensional space (X, Y, Z axes). This spatial interconnect minimizes communication distance, processing massive parameter synchronization at peak speeds.",
+    "desc2D": "TPU v5e and Trillium use an efficiency-optimized 2D Torus mesh topology. Connecting to 4 neighbors on a planar grid, it eliminates complex 3D wiring and heat dissipation overhead, providing overwhelming cost-efficiency and performance per watt.",
+    "podDesc_v1": "TPU v1 was a standalone accelerator deployed before the unified Pod cluster architecture was introduced. It proved the tremendous potential of hardware-level systolic array matrix multipliers (MXUs).",
+    "podDesc_v2": "The TPU v2 Pod is Google's first scalable supercomputer cluster built by linking 64 chips directly via ICI forming a 2D Torus, pioneering massive distributed AI training without host bottleneck.",
+    "podDesc_v3": "The TPU v3 Pod introduces liquid cooling to maximize compute density, linking 1024 chips in a 2D Torus grid to deliver a staggering combined peak performance exceeding 100 PFLOPs.",
+    "podDesc_v4": "The TPU v4 Pod features a 3D Torus interconnect of 4096 chips, ascending into veritable Exascale supercomputer capabilities. It uniquely integrates Optical Circuit Switches (OCS) for unmatched infrastructure flexibility.",
+    "podDesc_v5e": "The TPU v5e Pod zeroes in on ultimate cost-efficiency and rapid scale-out capabilities. Consisting of 256 locally linked chips in a 2D Torus mesh, it drastically curtails deployment complexities overhead.",
+    "podDesc_v5p": "The TPU v5p Pod is the largest-scale iteration targeted explicitly for frontier LLM training, chaining 8960 chips via an ultra-fast OCS-switched 3D Torus yielding uncompromising throughput and parallelization.",
+    "podDesc_trillium": "The Trillium (v6e) Pod emphasizes cutting-edge energy efficiency combined with gigantic leap in memory capacity per node, linking 256 chips locally in a 2D Torus mesh optimized for next-gen scalable reasoning.",
+    "podDesc_ironwood": "The Ironwood (v7) Pod connects an unprecedented 9216 chips into an ultimate AI grid, precision-engineered to endure the extreme physical limits of multi-tenant inter-core data traffic distribution."
   },
   "simulation": {
     "play": "Play",
@@ -115,6 +170,7 @@
     "credits": "This site was created for educational purposes."
   },
   "tour": {
+    "deepDiveBtn": "Explore How it Works (Deep Dive)",
     "startTour": "Start Guided Tour",
     "next": "Next",
     "prev": "Previous",
@@ -122,33 +178,47 @@
     "finish": "Finish",
     "overview": {
       "title": "TPU Architecture Overview",
-      "description": "This diagram shows the full structure of a TPU chip. The Host (CPU) on the left is the control computer that sends training data and instructions. Inside the chip: HBM and VMEM store data, the MXU performs matrix operations, and ACC/VPU refine the results. ICI connects multiple chips for large-scale AI training."
+      "description": "This diagram shows the full structure of a TPU chip. The Host (CPU) on the left is the control computer that sends training data and instructions. Inside the chip: HBM and VMEM store data, the MXU performs matrix operations, and ACC/VPU refine the results. ICI connects multiple chips for large-scale AI training.",
+      "deepDive": "Google TPUs feature a hierarchical architecture: At the macro level, a 'Pod' acts as a supercomputer comprising hundreds or thousands of 'TPU Chips' connected via a 2D/3D Torus mesh (ICI). Each individual TPU Chip is subdivided into 1 or 2 independent 'Tensor Cores'. Every Tensor Core acts as an autonomous computing environment equipped with its own 'MXU' for matrix multiplication, 'VPU' for vector/activation processing, and a 'Scalar Unit' to orchestrate operations. This builds the fundamental hierarchy: [Pod > Chip > Tensor Core > MXU/VPU]."
     },
     "mxu": {
-      "title": "MXU — Matrix Computation Engine",
-      "description": "The MXU (Matrix Multiply Unit) handles matrix multiplication — the core operation in AI. Inside is a grid called a 'systolic array' where data flows like a conveyor belt, with each cell simultaneously performing multiply-and-add. The diagonal wave in the diagram shows this process. Unlike GPUs that use thousands of general-purpose cores, the MXU is specialized purely for matrix math, achieving higher energy efficiency."
+      "title": "MXU\nMatrix Computation Engine",
+      "description": "The MXU (Matrix Multiply Unit) handles matrix multiplication — the core operation in AI. Inside is a grid called a 'systolic array' where data flows like a conveyor belt, with each cell simultaneously performing multiply-and-add. The diagonal wave in the diagram shows this process. Unlike GPUs that use thousands of general-purpose cores, the MXU is specialized purely for matrix math, achieving higher energy efficiency.",
+      "deepDive": "Inside the MXU, tens of thousands of dedicated Multiply-Accumulate (MAC) units (e.g., a 128x128 array yields 16,384 MACs) form a unified 'systolic array'. With every clock pulse, data waves through the array, simultaneously triggering 16,384 partial sum calculations in a single cycle. Across successive TPU generations (from v2 to v5p), Google exponentially multiplied single-chip throughput by scaling both the physical dimensions and the quantity of MXUs per core."
     },
     "hbm_vmem": {
-      "title": "HBM & VMEM — Two-Level Memory",
-      "description": "HBM (High Bandwidth Memory) sits 'outside' the chip and stores AI model weights and training data in bulk. However, HBM is too slow for the MXU to read directly. That's where VMEM comes in — a small, fast memory 'inside' the chip that acts as a bridge. Data is pre-fetched from HBM into VMEM in chunks, then VMEM feeds it to the MXU at high speed. Follow the HBM → VMEM → MXU flow in the diagram."
+      "title": "HBM & VMEM\nTwo-Level Memory",
+      "description": "HBM (High Bandwidth Memory) sits 'outside' the chip and stores AI model weights and training data in bulk. However, HBM is too slow for the MXU to read directly. That's where VMEM comes in — a small, fast memory 'inside' the chip that acts as a bridge. Data is pre-fetched from HBM into VMEM in chunks, then VMEM feeds it to the MXU at high speed. Follow the HBM → VMEM → MXU flow in the diagram.",
+      "deepDive": "The most critical bottleneck in deep learning isn't raw computation, but rather the 'Memory Wall' (I/O limits). To circumvent HBM latency, TPUs embed a massive on-chip SRAM block called 'VMEM' (Vector Memory), sizing up to hundreds of megabytes, positioned directly alongside the cores. Unlike dynamic L1/L2 hardware caches in CPUs, VMEM is a fully software-managed scratchpad memory. The compiler explicitly dictates exact data placement and retrieval, completely eliminating unpredictable cache misses."
     },
     "vpu_acc": {
-      "title": "ACC & VPU — Result Post-Processing",
-      "description": "After the MXU finishes matrix multiplication, it produces intermediate results (partial sums). The Accumulators (ACC) collect and combine these partial sums. Next, the VPU (Vector Processing Unit) applies non-linear operations like activation functions (ReLU, Softmax) — essential steps for AI learning. The processed data then flows back through VMEM to HBM. Follow the MXU → ACC → VPU → VMEM → HBM sequence in the diagram."
+      "title": "ACC & VPU\nResult Post-Processing",
+      "description": "After the MXU finishes matrix multiplication, it produces intermediate results (partial sums). The Accumulators (ACC) collect and combine these partial sums. Next, the VPU (Vector Processing Unit) applies non-linear operations like activation functions (ReLU, Softmax) — essential steps for AI learning. The processed data then flows back through VMEM to HBM. Follow the MXU → ACC → VPU → VMEM → HBM sequence in the diagram.",
+      "deepDive": "Raw matrix multiplication (dot products) is only half the battle. Results exiting the MXU are precisely accumulated in 32-bit Accumulators before passing to the Vector Processing Unit (VPU). Functioning much like a traditional supercomputer's vector processor, the VPU ingests these accumulated values to rapidly execute non-linear activation functions (ReLU, GELU), Normalization, and Pooling. After applying these complex final math operations, it writes the completed tensor back into VMEM."
     },
     "ici": {
-      "title": "ICI — High-Speed Chip Link",
-      "description": "ICI (Inter-Chip Interconnect) is a dedicated high-speed link connecting TPU chips together. Large AI models like GPT or Gemini don't fit in a single chip's memory, so they're split across many chips for training. Each chip exchanges its computed gradients (learning signals) with others via ICI. Notice how data flows from HBM through ICI to the neighbor chip in both directions."
+      "title": "ICI\nHigh-Speed Chip Link",
+      "description": "ICI (Inter-Chip Interconnect) is a dedicated high-speed link connecting TPU chips together. Large AI models like GPT or Gemini don't fit in a single chip's memory, so they're split across many chips for training. Each chip exchanges its computed gradients (learning signals) with others via ICI. Notice how data flows from HBM through ICI to the neighbor chip in both directions.",
+      "deepDive": "ICI (Inter-Core Interconnect) is Google's proprietary network fabric that enables thousands of TPU chips to operate seamlessly as a single supercomputer. By bypassing traditional server networking hops (NIC, Switch, CPU), ICI facilitates ultra-low latency, direct peer-to-peer communication between chips.\n\n• 3D Torus Topology: TPUs are woven into a 6-way multi-dimensional mesh, guaranteeing shortest-path routing and eliminating traffic bottlenecks.\n• Hardware Colletive Communication: Critical distributed learning synchronization operations like All-Reduce are hardware-accelerated directly on the fabric to prevent scale-out performance degradation.\n• Optical Circuit Switch (OCS): Introduced in TPU v4, OCS utilizes microscopic MEMS mirrors to physically redirect light paths. This enables massive network topologies to be dynamically reconfigured in seconds via software, bypassing physical cable rewiring and ensuring instant fault tolerance.\n\nTogether, these underlying innovations empower Google's massive TPU Pod clusters to achieve near-perfect linear scaling even when distributed parameter synchronization occurs across tens of thousands of chips."
+    },
+    "sparsecore": {
+      "title": "SparseCore\nEmbedding Processor",
+      "description": "The SparseCore is a specialized dataflow processor integrated into modern TPUs, dedicated to accelerating irregular, memory-bound 'sparse lookups' vital for massive recommendation models or MoE routing. By reading scattered vectors directly from HBM, it effectively solves the embedding bottleneck.",
+      "deepDive": "The SparseCore was architected specifically to handle 'embedding table lookups' frequently encountered in recommendation systems and Giant Language Models (LLMs), where memory access is highly irregular (sparse). In traditional Dense-heavy MXU architectures, these sparse memory accesses created massive bottlenecks. The SCT (Sparse Computation Tensor) is its dedicated computing engine that executes irregular vector operations like Gather/Scatter at ultra-high speeds, offloading them from the main MXU. Combined with its own Local Scratchpad Memory (SPMEM), SparseCore breaks through memory bandwidth limits. Astonishingly, it occupies just 5% of the total chip area while accelerating embedding lookups by 5-7x."
     },
     "pipeline": {
-      "title": "Full Data Flow",
-      "description": "The complete journey of one AI training step: ① Host (CPU) sends training data to HBM → ② Relevant portions are loaded from HBM into VMEM → ③ VMEM feeds data to MXU for matrix multiplication → ④ MXU results accumulate in the Accumulators → ⑤ VPU applies activation functions and post-processing → ⑥ Results flow back through VMEM to HBM → ⑦ If needed, results are shared with other chips via ICI. This cycle repeats millions of times as the AI learns."
+      "title": "Full Data Pipeline\nData Flow",
+      "description": "When data loads from HBM, it forks into a dual-pipeline processing architecture: ① The blue path streams dense matrix parameters straight into the MXU for high-speed multiply-accumulate operations. ② The purple path routes sparse embedding data directly into the SparseCore's dedicated SPMEM for ultra-fast scatter/gather lookups. Both processing pipelines execute fully asynchronously before merging at the VPU, unleashing the TPU's true parallel potential."
     }
   },
   "common": {
     "language": "Language",
     "loading": "Loading...",
     "notFound": "Page not found.",
-    "backHome": "Back to Home"
+    "backHome": "Back to Home",
+    "play": "Start Calculation",
+    "pause": "Pause",
+    "restart": "Restart",
+    "reset": "Reset"
   }
 }

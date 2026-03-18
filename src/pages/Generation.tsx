@@ -3,14 +3,16 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { getGeneration, generations } from '../data/generations'
 import { useTour } from '../hooks/useTour'
-import TpuDiagram from '../components/tpu-diagram/TpuDiagram'
+import InteractiveArchitecture from '../components/tpu-diagram/InteractiveArchitecture'
+import PodVisualizer from '../components/tpu-diagram/PodVisualizer'
 import TourPanel from '../components/ui/TourOverlay'
 
 export default function Generation() {
   const { id } = useParams<{ id: string }>()
   const { t } = useTranslation()
   const gen = getGeneration(id || '')
-  const tour = useTour()
+  const hasSparseCore = (gen?.specs.sparseCores ?? 0) > 0
+  const tour = useTour(hasSparseCore)
 
   if (!gen) {
     return (
@@ -26,6 +28,8 @@ export default function Generation() {
   const currentIndex = generations.findIndex((g) => g.id === gen.id)
   const prev = currentIndex > 0 ? generations[currentIndex - 1] : null
   const next = currentIndex < generations.length - 1 ? generations[currentIndex + 1] : null
+
+  const activeStep = tour.isActive ? tour.step.id : 'overview'
 
   return (
     <main className="pt-24 pb-16 px-4">
@@ -55,13 +59,9 @@ export default function Generation() {
             {t(gen.descriptionKey)}
           </p>
 
-          {/* 2D TPU Diagram — no overlay inside */}
-          <div className="rounded-2xl overflow-hidden border border-[#dadce0] bg-white shadow-sm h-[70vh] min-h-[500px]">
-            <TpuDiagram
-              tourStep={tour.isActive ? tour.currentStep : -1}
-              isActive={tour.isActive}
-              generationId={gen.id}
-            />
+          {/* Interactive TPU Diagram */}
+          <div className="rounded-2xl overflow-hidden border border-[#dadce0] bg-white shadow-sm">
+            <InteractiveArchitecture activeStep={activeStep} hasSparseCore={hasSparseCore} />
           </div>
 
           {/* Tour controls — below diagram, never overlapping */}
@@ -90,57 +90,108 @@ export default function Generation() {
             </div>
           )}
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12 mt-4">
-            <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm">
-              <h2
-                className="text-xl font-bold mb-4"
-                style={{ fontFamily: "'Google Sans', sans-serif" }}
-              >
-                {t('generation.specs')}
-              </h2>
-              <dl className="space-y-3">
-                {gen.specs.peakTflops != null && (
-                  <div className="flex justify-between">
-                    <dt className="text-[#5f6368]">{t('generation.peakTflops')}</dt>
-                    <dd className="font-mono text-[#202124]">{gen.specs.peakTflops}</dd>
-                  </div>
-                )}
-                {gen.specs.hbmGb != null && (
-                  <div className="flex justify-between">
-                    <dt className="text-[#5f6368]">{t('generation.hbm')}</dt>
-                    <dd className="font-mono text-[#202124]">{gen.specs.hbmGb} GB</dd>
-                  </div>
-                )}
-                {gen.specs.hbmBandwidthGbps != null && (
-                  <div className="flex justify-between">
-                    <dt className="text-[#5f6368]">{t('generation.hbmBandwidth')}</dt>
-                    <dd className="font-mono text-[#202124]">{gen.specs.hbmBandwidthGbps} GB/s</dd>
-                  </div>
-                )}
-                {gen.specs.iciGbps != null && (
-                  <div className="flex justify-between">
-                    <dt className="text-[#5f6368]">{t('generation.iciBandwidth')}</dt>
-                    <dd className="font-mono text-[#202124]">{gen.specs.iciGbps} Gbps</dd>
-                  </div>
-                )}
-                {gen.specs.podSize != null && (
-                  <div className="flex justify-between">
-                    <dt className="text-[#5f6368]">{t('generation.podSize')}</dt>
-                    <dd className="font-mono text-[#202124]">{gen.specs.podSize.toLocaleString()} chips</dd>
-                  </div>
-                )}
-              </dl>
+          <div className="mb-12 mt-8 space-y-6">
+            {/* Top Metric Cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+               {gen.specs.tensorCores != null && (
+                 <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1">
+                   <h3 className="text-sm font-medium text-[#5f6368] mb-2">{t('generation.tensorCores')}</h3>
+                   <p className="text-4xl font-black text-[#4285f4]">{gen.specs.tensorCores}</p>
+                 </div>
+               )}
+               {gen.specs.sparseCores != null && (
+                 <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1">
+                   <h3 className="text-sm font-medium text-[#5f6368] mb-2">{t('generation.sparseCores')}</h3>
+                   <p className="text-4xl font-black text-[#8b5cf6]">{gen.specs.sparseCores}</p>
+                 </div>
+               )}
+               {gen.specs.mxuPerCore != null && (
+                 <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1">
+                   <h3 className="text-sm font-medium text-[#5f6368] mb-2">{t('generation.mxuPerCore')}</h3>
+                   <p className="text-4xl font-black text-[#a855f7]">{gen.specs.mxuPerCore}</p>
+                 </div>
+               )}
+               {gen.specs.vmemMb != null && (
+                 <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1">
+                   <h3 className="text-sm font-medium text-[#5f6368] mb-2">{t('generation.vmem')}</h3>
+                   <p className="text-4xl font-black text-[#ec4899]">{gen.specs.vmemMb} <span className="text-lg font-bold text-gray-400">MB</span></p>
+                 </div>
+               )}
+               {gen.specs.hbmGb != null && (
+                 <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center transition-transform hover:-translate-y-1">
+                   <h3 className="text-sm font-medium text-[#5f6368] mb-2">{t('generation.hbm')}</h3>
+                   <p className="text-4xl font-black text-[#f97316]">{gen.specs.hbmGb} <span className="text-lg font-bold text-gray-400">GB</span></p>
+                 </div>
+               )}
             </div>
 
-            <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm">
-              <h2
-                className="text-xl font-bold mb-4"
-                style={{ fontFamily: "'Google Sans', sans-serif" }}
-              >
-                {t('generation.innovations')}
-              </h2>
-              <p className="text-[#5f6368] leading-relaxed">{t(gen.innovationsKey)}</p>
+            {/* Bottom Details */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm">
+                <h2
+                  className="text-xl font-bold mb-6"
+                  style={{ fontFamily: "'Google Sans', sans-serif" }}
+                >
+                  {t('generation.specs')}
+                </h2>
+                <dl className="space-y-4">
+                  {gen.specs.peakTflops != null && (
+                    <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                      <dt className="text-[#5f6368] font-medium">{t('generation.peakTflops')}</dt>
+                      <dd className="font-mono text-lg font-bold text-[#202124]">{gen.specs.peakTflops}</dd>
+                    </div>
+                  )}
+                  {gen.specs.hbmBandwidthGbps != null && (
+                    <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                      <dt className="text-[#5f6368] font-medium">{t('generation.hbmBandwidth')}</dt>
+                      <dd className="font-mono text-lg font-bold text-[#202124]">{gen.specs.hbmBandwidthGbps} GB/s</dd>
+                    </div>
+                  )}
+                  {gen.specs.iciGbps != null && (
+                    <div className="flex justify-between items-center border-b border-gray-100 pb-3">
+                      <dt className="text-[#5f6368] font-medium">{t('generation.iciBandwidth')}</dt>
+                      <dd className="font-mono text-lg font-bold text-[#202124]">{gen.specs.iciGbps} Gbps</dd>
+                    </div>
+                  )}
+                  {gen.specs.podSize != null && (
+                    <div className="flex justify-between items-center pb-1">
+                      <dt className="text-[#5f6368] font-medium">{t('generation.podSize')}</dt>
+                      <dd className="font-mono text-lg font-bold text-[#202124]">{gen.specs.podSize.toLocaleString()} chips</dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+
+              <div className="bg-white border border-[#dadce0] rounded-2xl p-6 shadow-sm">
+                <h2
+                  className="text-xl font-bold mb-4"
+                  style={{ fontFamily: "'Google Sans', sans-serif" }}
+                >
+                  {t('generation.innovations')}
+                </h2>
+                <p className="text-[#3c4043] text-lg leading-relaxed">{t(gen.innovationsKey)}</p>
+              </div>
             </div>
+
+            {/* Pod Visualizer Section */}
+            {gen.specs.podSize != null && (
+              <div className="mt-12 bg-white border border-[#dadce0] rounded-2xl shadow-sm overflow-hidden flex flex-col md:flex-row">
+                <div className="p-8 md:w-1/3 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#dadce0]">
+                  <h2
+                    className="text-2xl font-bold mb-3 text-[#202124]"
+                    style={{ fontFamily: "'Google Sans', sans-serif" }}
+                  >
+                    {t('generation.podStructure')}
+                  </h2>
+                  <p className="text-[#5f6368] leading-relaxed text-lg break-keep">
+                    {gen.podStructureDescKey ? t(gen.podStructureDescKey) : t('generation.podStructureDesc')}
+                  </p>
+                </div>
+                <div className="md:w-2/3 bg-slate-900 border-l border-slate-800 p-2 md:p-6 flex items-center justify-center">
+                  <PodVisualizer podSize={gen.specs.podSize} />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="flex justify-between">

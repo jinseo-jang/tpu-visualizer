@@ -5,7 +5,7 @@
     "compare": "GPU vs TPU"
   },
   "hero": {
-    "title": "TPU의 모든 것을 이해하다",
+    "title": "TPU 톺아보기",
     "subtitle": "인터랙티브 시각화로 배우는 TPU 아키텍처와 데이터 파이프라인",
     "cta": "TPU 세대 탐색하기"
   },
@@ -14,13 +14,47 @@
       "title": "TPU란 무엇인가?",
       "description": "TPU(Tensor Processing Unit)는 Google이 머신러닝 워크로드를 위해 설계한 맞춤형 ASIC(Application-Specific Integrated Circuit)입니다. 범용 CPU나 GPU와 달리, 행렬 연산에 특화된 시스톨릭 어레이를 사용하여 딥러닝 모델의 훈련과 추론을 가속화합니다."
     },
+    "systolic": {
+      "title": "시스톨릭 어레이: 데이터 컨베이어 벨트",
+      "desc": "기존 CPU가 메모리에서 매번 값을 꺼내와 곱셈을 하는 것과 달리, TPU의 시스톨릭 어레이는 심장이 피를 뿜듯(Systolic) 데이터를 유기적으로 흐르게 하여 연산 효율을 극대화합니다.",
+      "step1Title": "가중치 고정\nWeight Stationary",
+      "step1": "학습된 AI 모델의 가중치(Weight) 파라미터가 각각의 연산 격자(Processing Elements) 내부에 고정되어 대기합니다.",
+      "step2Title": "파도 같은 흐름\nWavefront",
+      "step2": "입력 데이터가 메모리에서 한 번 꺼내진 후, 격자의 왼쪽에서 오른쪽으로, 위에서 아래로 물결(Wavefront)처럼 끊임없이 흘러들어갑니다.",
+      "step3Title": "부분합 누적\nMAC",
+      "step3": "격자 안에서 변하는 숫자는 누적 부분합(Partial Sum)입니다! 각 블록은 지나가는 입력값과 자신의 가중치를 곱하고(Multiply), 이전 블록에서 넘겨받은 숫자에 그 곱셈 결과를 즉시 더해(Accumulate) 자신의 숫자를 업데이트합니다. 이렇게 쉴새없이 계산과 전달을 반복하여 최종 행렬 연산을 완성합니다."
+    },
+    "coreFeatures": {
+      "title": "TPU 5대 핵심 아키텍처",
+      "subtitle": "거대 AI 모델의 병목을 부수는 구글의 5가지 파괴적 하드웨어 혁신을 소개합니다.",
+      "systolic": {
+        "title": "시스톨릭 어레이\n데이터 컨베이어 벨트",
+        "desc": "심장이 피를 뿜어내듯 데이터를 끊임없이 한 방향으로 흐르게 하여 행렬 곱셈을 초고속으로 동시 처리하는 최적화된 메인 엔진입니다."
+      },
+      "pod": {
+        "title": "Pod 슈퍼컴퓨터 구조",
+        "desc": "단일 칩을 넘어 수천 개의 TPU 칩을 직접 연결하여 마치 거대한 하나의 컴퓨터처럼 동작하게 만드는 거대 클러스터링 기술입니다."
+      },
+      "ici": {
+        "title": "ICI\n칩 간 다이렉트 망",
+        "desc": "기존 서버의 느린 네트워크 장비(CPU/스위치)를 우회하여 칩과 칩을 광케이블로 직결하는 초저지연 전용 통신망입니다."
+      },
+      "sparsecore": {
+        "title": "SparseCore\n임베딩 전용 코어",
+        "desc": "추천 시스템이나 LLM에서 발생하는 불규칙한 메모리 조회를 메인 코어 대신 전담하여 대역폭 병목을 폭발적으로 해소합니다."
+      },
+      "hbm": {
+        "title": "HBM\n초고대역폭 메모리",
+        "desc": "수직으로 적층된 고성능 통합 메모리로 칩 바로 옆에 위치하여, 방대한 파라미터 데이터를 연산기에 빛의 속도로 공급합니다."
+      }
+    },
     "coreArchitecture": {
       "title": "핵심 아키텍처",
-      "mxu": "MXU (Matrix Multiply Unit)",
+      "mxu": "MXU\nMatrix Multiply Unit",
       "mxuDesc": "시스톨릭 어레이 기반의 행렬 연산 전용 유닛으로, TPU의 핵심 연산 엔진입니다.",
-      "hbm": "HBM (High Bandwidth Memory)",
+      "hbm": "HBM\nHigh Bandwidth Memory",
       "hbmDesc": "초고대역폭 메모리로, 대량의 모델 파라미터와 활성화 값을 저장합니다.",
-      "ici": "ICI (Inter-Chip Interconnect)",
+      "ici": "ICI\nInter-Chip Interconnect",
       "iciDesc": "칩 간 초고속 통신을 위한 인터커넥트로, Pod 규모 확장을 가능하게 합니다."
     },
     "timeline": {
@@ -76,13 +110,34 @@
     }
   },
   "generation": {
-    "specs": "사양",
+    "specs": "상세 스펙",
     "innovations": "주요 혁신",
     "peakTflops": "최고 TFLOPS",
     "hbm": "HBM 용량",
     "hbmBandwidth": "HBM 대역폭",
     "iciBandwidth": "ICI 대역폭",
-    "podSize": "Pod 크기"
+    "podSize": "Pod 크기",
+    "tensorCores": "칩당 텐서 코어",
+    "sparseCores": "칩당 스파스코어",
+    "mxuPerCore": "코어당 MXU",
+    "vmem": "온칩 VMEM (Total)",
+    "podStructure": "Pod 구조",
+    "podStructureDesc": "TPU Pod은 방대한 수의 TPU 칩들을 초고속 맞춤형 네트워크(ICI)로 직접 연결하여 구축한 단일 슈퍼컴퓨터 클러스터입니다. 네트워크 병목 현상 없이 수천 개의 칩이 마치 하나의 거대한 프로세서처럼 동작하게 하여, 거대 AI 모델의 분산 학습 시간을 획기적으로 단축시키는 핵심 아키텍처입니다.",
+    "totalChipsTitle": "Pod당 총 칩 개수",
+    "massiveSupercomputer": "초거대 스케일 슈퍼컴퓨터",
+    "optimizedServerMesh": "고효율 서버 메쉬",
+    "topology3D": "3D 토러스 네트워크",
+    "topology2D": "2D 토러스 네트워크",
+    "desc3D": "TPU v4 및 v5p는 데이터 전송 지연을 최소화하기 위해 칩들을 3차원 입체 공간(X, Y, Z 축)에서 6개의 이웃과 연결하는 3D 토러스 토폴로지를 채택했습니다. 이 입체적인 상호연결망은 통신 거리를 최소화하여 대규모 파라미터 동기화를 최고 속도로 처리합니다.",
+    "desc2D": "TPU v5e 및 Trillium 등은 효율성에 특화된 2D 토러스 메쉬 토폴로지를 사용합니다. 평면 격자상에서 4방향 이웃과 직접 연결되며, 복잡한 입체 배선과 발열, 비용을 대폭 절감하여 압도적인 가성비(Cost-efficiency)와 전력 효율을 제공하도록 설계되었습니다.",
+    "podDesc_v1": "TPU v1은 단독 구동 칩으로, 하드웨어 차원의 Pod 구성 개념이 아직 도입되기 전이었습니다. 칩 내부의 고효율 시스톨릭 행렬 연산기(MXU)의 잠재력을 세상에 최초로 알렸습니다.",
+    "podDesc_v2": "TPU v2 Pod은 64개의 칩을 2D Torus 구조로(ICI) 직접 연결한 구글 최초의 슈퍼컴퓨터 클러스터 시스템입니다. 단일 장비를 넘어선 대규모 클러스터 학습 아키텍처의 기반을 닦았습니다.",
+    "podDesc_v3": "TPU v3 Pod은 수랭식 쿨링을 업계 선도적으로 도입하여 시스템 성능 밀도를 극대화했습니다. 1024개의 칩을 2D Torus 망으로 묶어 100 PFLOPs가 넘는 압도적 연산 능력을 실현했습니다.",
+    "podDesc_v4": "TPU v4 Pod은 무려 4096개의 칩을 3D Torus 구조로 묶어낸 엑사스케일(Exascale) 시스템입니다. 특히 광회선 스위치(OCS) 기술을 최초로 도입해 네트워크 위상 구성의 유연성을 전례 없이 끌어올렸습니다.",
+    "podDesc_v5e": "TPU v5e Pod은 코어당 효율성과 배포 편의성에 극단적으로 집중했습니다. 256개의 칩을 2D Torus 평면 메쉬로 묶어 단일 Pod의 구성/유지 비용 비율을 최적화시킨 인퍼런스 특화 파드입니다.",
+    "podDesc_v5p": "TPU v5p Pod은 초거대 언어 모델(LLM) 학습을 타겟으로 설계된 역대 최대 스케일 8960개 칩 구성의 3D Torus 네트워크입니다. 초고대역폭 광통신 회선(OCS)으로 병목 없는 페타바이트급 동기화를 제공합니다.",
+    "podDesc_trillium": "Trillium(v6e) Pod은 차세대 데이터센터의 에너지 효율 한계를 돌파하기 위해 256개 칩을 2D Torus망으로 엮었습니다. 칩당 대용량 메모리 밴드위스와 초고속 통신을 결합해 무시무시한 TCO 절감을 달성합니다.",
+    "podDesc_ironwood": "Ironwood(v7) Pod은 9216개의 칩을 단일망으로 연결하는 구조로, 단일 클러스터 내 데이터 트래픽 교환의 한계치를 시험하는 궁극의 초거대 AI 컴퓨팅 단위입니다."
   },
   "simulation": {
     "play": "재생",
@@ -115,6 +170,7 @@
     "credits": "이 사이트는 교육 목적으로 제작되었습니다."
   },
   "tour": {
+    "deepDiveBtn": "동작 원리 알아보기 (Deep Dive)",
     "startTour": "가이드 투어 시작",
     "next": "다음",
     "prev": "이전",
@@ -122,33 +178,47 @@
     "finish": "완료",
     "overview": {
       "title": "TPU 전체 구조",
-      "description": "TPU 칩의 전체 구조를 보여줍니다. 왼쪽 Host(CPU)는 학습 데이터와 명령을 보내는 제어 컴퓨터입니다. 칩 내부에는 데이터를 저장하는 메모리(HBM, VMEM), 행렬 연산을 하는 MXU, 결과를 정리하는 ACC와 VPU가 있습니다. 여러 칩을 연결하는 ICI는 대규모 AI 모델 학습에 필수적입니다."
+      "description": "TPU 칩의 전체 구조를 보여줍니다. 왼쪽 Host(CPU)는 학습 데이터와 명령을 보내는 제어 컴퓨터입니다. 칩 내부에는 데이터를 저장하는 메모리(HBM, VMEM), 행렬 연산을 하는 MXU, 결과를 정리하는 ACC와 VPU가 있습니다. 여러 칩을 연결하는 ICI는 대규모 AI 모델 학습에 필수적입니다.",
+      "deepDive": "구글 TPU는 계층적인 구조를 가집니다: 슈퍼컴퓨터 단위인 'Pod' 안에는 수백~수천 개의 'TPU Chip'이 2D/3D Torus 망(ICI)으로 연결되어 있습니다. 하나의 TPU Chip 내부는 1~2개의 'Tensor Core'로 나뉘며, 각 Tensor Core는 독립적인 연산 공간으로 가중치 곱셈을 전담하는 'MXU', 벡터/활성화 함수를 처리하는 'VPU', 그리고 이들을 제어하는 'Scalar Unit'으로 구성됩니다. 즉, [Pod > Chip > Tensor Core > MXU/VPU]의 상관관계를 가집니다."
     },
     "mxu": {
-      "title": "MXU — 행렬 연산 엔진",
-      "description": "MXU(Matrix Multiply Unit)는 AI의 핵심 연산인 행렬 곱셈을 담당합니다. 내부는 격자(그리드) 형태의 '시스톨릭 어레이'로 되어 있는데, 마치 컨베이어 벨트처럼 데이터가 한 방향으로 흐르면서 각 칸이 동시에 곱셈과 덧셈을 수행합니다. 다이어그램의 대각선 파형이 이 과정입니다. GPU가 수천 개의 범용 코어로 병렬 처리하는 것과 달리, TPU의 MXU는 행렬 연산에만 특화되어 더 높은 에너지 효율을 달성합니다."
+      "title": "MXU\n행렬 연산 엔진",
+      "description": "MXU(Matrix Multiply Unit)는 AI의 핵심 연산인 행렬 곱셈을 담당합니다. 내부는 격자(그리드) 형태의 '시스톨릭 어레이'로 되어 있는데, 마치 컨베이어 벨트처럼 데이터가 한 방향으로 흐르면서 각 칸이 동시에 곱셈과 덧셈을 수행합니다. 다이어그램의 대각선 파형이 이 과정입니다. GPU가 수천 개의 범용 코어로 병렬 처리하는 것과 달리, TPU의 MXU는 행렬 연산에만 특화되어 더 높은 에너지 효율을 달성합니다.",
+      "deepDive": "MXU 안에는 곱셈-덧셈(MAC) 전용 연산기가 수만 개(예: 128x128=16,384개) 모여 한 덩어리의 '시스톨릭 어레이'를 이룹니다. 매 클럭 펄스마다 파도가 치듯 데이터가 어레이를 통과하며, 단 한 번의 클럭으로 16,384번의 부분합 연산이 동시에 쏟아집니다. TPU 세대가 진화할수록(v2 -> v5p) 칩 내의 MXU 사이즈와 개수를 늘려 단일 칩의 연산 처리량을 기하급수적으로 증폭시켰습니다."
     },
     "hbm_vmem": {
-      "title": "HBM & VMEM — 2단계 메모리",
-      "description": "HBM(High Bandwidth Memory)은 칩 '외부'에 있는 대용량 메모리로, AI 모델의 가중치(파라미터)와 학습 데이터를 저장합니다. 하지만 HBM은 용량이 크되 MXU에서 직접 읽기엔 느립니다. 그래서 VMEM이라는 칩 '내부'의 소형 고속 메모리가 중간 다리 역할을 합니다. HBM에서 필요한 데이터 덩어리를 VMEM으로 미리 가져오고, VMEM이 MXU에 빠르게 공급합니다. 다이어그램에서 HBM → VMEM → MXU 흐름을 확인하세요."
+      "title": "HBM & VMEM\n2단계 메모리",
+      "description": "HBM(High Bandwidth Memory)은 칩 '외부'에 있는 대용량 메모리로, AI 모델의 가중치(파라미터)와 학습 데이터를 저장합니다. 하지만 HBM은 용량이 크되 MXU에서 직접 읽기엔 느립니다. 그래서 VMEM이라는 칩 '내부'의 소형 고속 메모리가 중간 다리 역할을 합니다. HBM에서 필요한 데이터 덩어리를 VMEM으로 미리 가져오고, VMEM이 MXU에 빠르게 공급합니다. 다이어그램에서 HBM → VMEM → MXU 흐름을 확인하세요.",
+      "deepDive": "딥러닝의 가장 큰 병목은 연산 속도 자체가 아니라 '메모리 입출력 한계(Memory Wall)'입니다. TPU는 HBM의 지연 시간을 극복하고자 칩 최측근에 수십~수백 메가바이트 크기의 초거대 SRAM인 'VMEM(Vector Memory)'을 배치했습니다. CPU의 L1/L2 하드웨어 캐시와 달리 캐시 미스가 일어나지 않도록, 개발자가 컴파일러를 통해 데이터를 직접(Explicitly) 배치하고 꺼내 쓰는 철저한 소프트웨어 제어형 메모리 구조입니다."
     },
     "vpu_acc": {
-      "title": "ACC & VPU — 결과 후처리",
-      "description": "MXU가 행렬 곱셈을 마치면 중간 결과(부분합)가 나옵니다. Accumulators(ACC)는 이 부분합들을 하나로 모아주는 저장소입니다. 다음으로 VPU(Vector Processing Unit)가 활성화 함수(ReLU, Softmax 등) 같은 비선형 연산을 적용합니다. 이 과정이 AI가 '학습'하는 데 핵심적인 역할을 합니다. 처리가 완료된 데이터는 VMEM을 거쳐 HBM에 다시 저장됩니다. 다이어그램에서 MXU → ACC → VPU → VMEM → HBM 순서를 따라가 보세요."
+      "title": "ACC & VPU\n결과 후처리",
+      "description": "MXU가 행렬 곱셈을 마치면 중간 결과(부분합)가 나옵니다. Accumulators(ACC)는 이 부분합들을 하나로 모아주는 저장소입니다. 다음으로 VPU(Vector Processing Unit)가 활성화 함수(ReLU, Softmax 등) 같은 비선형 연산을 적용합니다. 이 과정이 AI가 '학습'하는 데 핵심적인 역할을 합니다. 처리가 완료된 데이터는 VMEM을 거쳐 HBM에 다시 저장됩니다. 다이어그램에서 MXU → ACC → VPU → VMEM → HBM 순서를 따라가 보세요.",
+      "deepDive": "순수 행렬 곱셈(행렬의 내적)만이 끝이 아닙니다. MXU를 거쳐나온 계산값은 32비트 Accumulator에 높은 정밀도로 누적(Accumulate)된 뒤, Vector Processing Unit (VPU)으로 넘겨집니다. 슈퍼컴퓨터의 벡터 프로세서와 유사한 VPU는 누적값을 전달받아 ReLU나 Gelu 같은 비선형 활성화 함수, 정규화(Normalization), Pooling 처리 등 정교한 나머지 계산들을 빠르게 일괄 처리한 다음 최종 텐서값만을 VMEM에 돌려놓습니다."
     },
     "ici": {
-      "title": "ICI — 칩 간 고속 연결",
-      "description": "ICI(Inter-Chip Interconnect)는 TPU 칩들을 서로 연결하는 전용 고속 통신선입니다. GPT나 Gemini 같은 대규모 AI 모델은 한 칩의 메모리에 다 들어가지 않기 때문에, 여러 칩에 나누어 학습합니다. 이때 각 칩이 계산한 그래디언트(학습 신호)를 ICI를 통해 서로 교환합니다. 데이터가 HBM에서 ICI를 거쳐 이웃 칩으로 전달되는 양방향 흐름을 확인하세요."
+      "title": "ICI\nInter-Core Interconnect",
+      "description": "TPU 전용 초고속 네트워크 망입니다. 데이터센터 네트워크 스위치를 거치지 않고 TPU 칩들이 직접 통신하여 엄청난 속도로 파라터를 동기화합니다.",
+      "deepDive": "ICI(Inter-Core Interconnect)는 수천 개의 TPU 칩을 단일 슈퍼컴퓨터처럼 작동하게 하는 구글의 독자적인 네트워크 패브릭입니다. 기존 서버 네트워크(NIC, 스위치, CPU) 연산을 우회하여 칩 간 다이렉트(P2P) 초고속 통신을 지원, 지연(Latency)을 극한으로 낮춥니다.\n\n• 3D 토러스(Torus) 토폴로지: 칩을 6방향(상하좌우전후)의 입체 그물망으로 거미줄처럼 연결해 최단 경로로 데이터를 전송하고, 트래픽 병목을 원천 차단합니다.\n• 하드웨어 레벨 집단 통신: All-Reduce와 같은 분산 학습의 필수 동기화 연산을 하드웨어에서 직접 가속하여 노드 확장에 따른 성능 저하를 방지합니다.\n• OCS (광 회선 스위치): 최신 TPU 시스템의 핵심으로, 수만 개의 거울(MEMS)을 조절해 광케이블의 빛 경로를 물리적으로 꺾어 연결합니다. 케이블 교체 없이 소프트웨어 명령만으로 전체 토폴로지 구조를 동적 재구성하고 장애를 복구합니다.\n\n이러한 구조 혁신 덕분에 구글의 TPU Pod는 수십, 수만 칩 단위의 거대한 클러스터에서도 선형적인 성능(Linear Scaling) 확장을 완벽에 가깝게 유지해냅니다."
+    },
+    "sparsecore": {
+      "title": "SparseCore\n임베딩 전담 유닛",
+      "description": "거대 추천 모델이나 LLM의 라우팅과 같이 불규칙하고 흩어져있는(Sparse) 메모리 조회를 전담하는 특수 구조입니다. HBM에 흩어진 파라미터들을 직접 빠르게 읽어들여 임베딩 병목을 폭발적으로 개선합니다.",
+      "deepDive": "SparseCore는 추천 시스템이나 초거대 언어 모델(LLM)과 같이 흩어져 있는 메모리(Sparse Memory) 접근이 잦은 작업의 '임베딩 테이블 조회'를 전담하기 위해 고안된 프로세서입니다. 순차적 계산을 잘하는 기존 Dense 기반 MXU 구조에서는 메모리를 듬성듬성 읽어오는 임베딩 처리가 엄청난 병목이었습니다. 내부에 포함된 SCT(Sparse Computation Tensor)는 Gather/Scatter 등 불규칙한 벡터 연산을 메인 MXU 대신 초고속으로 처리하는 전용 컴퓨팅 엔진입니다. SparseCore는 SCT와 독자적인 Local Scratchpad 메모리(SPMEM)를 갖추어, 메인 코어의 부하를 덜고 메모리 대역폭 한계를 돌파합니다. 칩 공간의 단 5%만 차지하면서 임베딩 속도를 무려 5~7배 끌어올립니다."
     },
     "pipeline": {
-      "title": "전체 데이터 흐름",
-      "description": "AI 학습 한 스텝의 전체 여정입니다: ① Host(CPU)가 학습 데이터를 HBM에 전송 → ② HBM에서 필요한 부분을 VMEM으로 로드 → ③ VMEM이 MXU에 데이터 공급, 행렬 곱셈 수행 → ④ MXU 결과가 Accumulators에 누적 → ⑤ VPU가 활성화 함수 등 후처리 → ⑥ 결과가 VMEM → HBM으로 되돌아감 → ⑦ 필요 시 ICI를 통해 다른 칩과 결과 교환. 이 과정이 수만~수백만 번 반복되면서 AI가 학습합니다."
+      "title": "전체 데이터 흐름\nData Pipeline",
+      "description": "학습 데이터가 HBM에서 로드되면 강력한 이중 흐름으로 분기됩니다: 파란선 경로는 밀집(Dense) 행렬 데이터를 MXU로 쏘아보내 초고속 연산하고, 보라색 경로는 희소(Sparse) 임베딩 파라미터를 SparseCore 내부 전용 메모리(SPMEM)로 즉시 가져가 고도로 흩어진 데이터를 신속하게 합칩니다. 양쪽 모두 VPU에서 다시 모여 완전히 비동기적인 초병렬 처리의 진면목을 보여줍니다."
     }
   },
   "common": {
     "language": "언어",
     "loading": "로딩 중...",
     "notFound": "페이지를 찾을 수 없습니다.",
-    "backHome": "홈으로 돌아가기"
+    "backHome": "홈으로 돌아가기",
+    "play": "연산 시작",
+    "pause": "일시정지",
+    "restart": "다시 시작",
+    "reset": "초기화"
   }
 }

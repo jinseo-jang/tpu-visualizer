@@ -46,23 +46,39 @@ const tourSteps: TourStep[] = [
   },
 ]
 
-export function useTour() {
+export function useTour(hasSparseCore: boolean = false) {
   const [currentStep, setCurrentStep] = useState(0)
   const [isActive, setIsActive] = useState(false)
 
-  const step = useMemo(() => tourSteps[currentStep], [currentStep])
+  const steps = useMemo(() => {
+    const base = JSON.parse(JSON.stringify(tourSteps)) as TourStep[]
+    if (hasSparseCore) {
+      const pipelineIdx = base.findIndex(s => s.id === 'pipeline')
+      base.splice(pipelineIdx, 0, {
+        id: 'sparsecore',
+        titleKey: 'tour.sparsecore.title',
+        descriptionKey: 'tour.sparsecore.description',
+        highlightComponents: ['sparsecore', 'hbm', 'vmem', 'vpu'],
+      })
+      base.find(s => s.id === 'overview')?.highlightComponents.push('sparsecore')
+      base.find(s => s.id === 'pipeline')?.highlightComponents.push('sparsecore')
+    }
+    return base
+  }, [hasSparseCore])
+
+  const step = useMemo(() => steps[currentStep] || steps[0], [currentStep, steps])
 
   const next = useCallback(() => {
-    setCurrentStep((s) => Math.min(s + 1, tourSteps.length - 1))
-  }, [])
+    setCurrentStep((s) => Math.min(s + 1, steps.length - 1))
+  }, [steps.length])
 
   const prev = useCallback(() => {
     setCurrentStep((s) => Math.max(s - 1, 0))
   }, [])
 
-  const goTo = useCallback((step: number) => {
-    setCurrentStep(Math.max(0, Math.min(step, tourSteps.length - 1)))
-  }, [])
+  const goTo = useCallback((stepIndex: number) => {
+    setCurrentStep(Math.max(0, Math.min(stepIndex, steps.length - 1)))
+  }, [steps.length])
 
   const start = useCallback(() => {
     setCurrentStep(0)
@@ -92,10 +108,10 @@ export function useTour() {
   return {
     currentStep,
     step,
-    totalSteps: tourSteps.length,
+    totalSteps: steps.length,
     isActive,
     isFirst: currentStep === 0,
-    isLast: currentStep === tourSteps.length - 1,
+    isLast: currentStep === steps.length - 1,
     next,
     prev,
     goTo,

@@ -139,7 +139,7 @@ export default function InteractiveArchitecture({ activeStep, hasSparseCore = fa
 
         {/* CHIP BACKGROUND */}
         <motion.div 
-          className="absolute w-[440px] h-[440px] top-[60px] left-[200px] border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100/30 z-0"
+          className="absolute w-[480px] h-[440px] top-[60px] left-[200px] border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100/30 z-0"
           style={{ opacity: getOpacity(['chip']) }}
         >
           <span className="absolute top-3 left-4 text-xs font-semibold text-gray-400">TPU Chip</span>
